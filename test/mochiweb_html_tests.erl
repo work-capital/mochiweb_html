@@ -562,7 +562,15 @@ parse_amp_test_() ->
      ?_assertEqual(
         {<<"html">>,[],
          [{<<"body">>,[],[<<"&">>]}]},
-        mochiweb_html:parse("<html><body>&</body></html>"))].
+        mochiweb_html:parse("<html><body>&</body></html>")),
+     ?_assertEqual(
+        {<<"html">>,[],
+         [{<<"body">>,[],[<<"&;">>]}]},
+        mochiweb_html:parse("<html><body>&;</body></html>")),
+     ?_assertEqual(
+        {<<"html">>,[],
+         [{<<"body">>,[],[<<"&MISSING;">>]}]},
+        mochiweb_html:parse("<html><body>&MISSING;</body></html>"))].
 
 parse_unescaped_lt_test() ->
     D1 = <<"<div> < < <a href=\"/\">Back</a></div>">>,
@@ -593,3 +601,10 @@ implicit_html_test() ->
         [{<<"head">>, [], []},
          {<<"body">>, [], []}]},
        mochiweb_html:parse("<!doctype html><head></head><body></body>")).
+
+no_letter_no_tag_test() ->
+    ?assertEqual(
+       {<<"html">>,[],
+         [{<<"body">>,[],[<<"<3><!><*><<>>">>,{<<"body">>,[],[]}]}]},
+       mochiweb_html:parse(<<"<html><body><3><!><*><<>><body></html>">>)
+      ).

@@ -1,6 +1,6 @@
 {application, mochiweb_html,
   [{description, "Mochiweb HTML parser"},
-   {vsn, "2.13.0"},
+   {vsn, "2.15.0"},
    {modules, []},
    {registered, []},
    {applications, [kernel, stdlib, crypto, inets, ssl, xmerl, compiler, syntax_tools]},
@@ -16,4 +16,8 @@
      "rebar.config",
      "README"
      ]},
-   {links, [ {"Github", "https://github.com/mochi/mochiweb"} ]} ]}.
+   {links, [
+    {"Github", "https://github.com/philss/mochiweb_html"},
+    {"Mochiweb", "https://github.com/mochi/mochiweb"}
+    ]}
+  ]}.
