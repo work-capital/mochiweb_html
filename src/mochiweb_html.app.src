@@ -6,6 +6,7 @@
    {applications, [kernel, stdlib, crypto, inets, ssl, xmerl, compiler, syntax_tools]},
    {licenses, ["MIT"]},
    {maintainers, ["Mochi Media, Inc.", "Bob Ippolito"]},
+   {requirements, []},
    {files, [
      "src/mochiweb_html.app.src",
      "src/mochiutf8.erl",
