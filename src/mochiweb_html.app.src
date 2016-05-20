@@ -7,13 +7,14 @@
    {licenses, ["MIT"]},
    {maintainers, ["Mochi Media, Inc.", "Bob Ippolito"]},
    {files, [
+     "src/mochiweb_html.app.src",
      "src/mochiutf8.erl",
      "src/mochinum.erl",
      "src/mochiweb_charref.erl",
      "src/mochiweb_html.erl",
-     "src/mochiweb_html.app.src",
-     "LICENSE",
      "rebar.config",
+     "rebar.lock",
+     "LICENSE",
      "README"
      ]},
    {links, [
