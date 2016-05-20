@@ -15,3 +15,11 @@ To create a new mochiweb using project:
 
 To create a new mochiweb using project in a specific directory:
    make app PROJECT=project_name PREFIX=$HOME/projects/
+
+About this fork
+===============
+
+This fork is destinated to be only for releasing the Mochiweb HTML parser versions.
+It is not meant to be for fixes or related stuffs. Please refer to the original Github page instead.
+
+Fork page: https://github.com/philss/mochiweb_html/tree/html-package
