@@ -51,8 +51,8 @@ parts_to_body([{Start, End, Body}], ContentType, Size) ->
     HeaderList = [{"Content-Type", ContentType},
                   {"Content-Range",
                    ["bytes ",
-                    mochiweb_util:make_io(Start), "-", mochiweb_util:make_io(End),
-                    "/", mochiweb_util:make_io(Size)]}],
+                    mochinum_utils_floki:make_io(Start), "-", mochinum_utils_floki:make_io(End),
+                    "/", mochinum_utils_floki:make_io(Size)]}],
     {HeaderList, Body};
 parts_to_body(BodyList, ContentType, Size) when is_list(BodyList) ->
     parts_to_multipart_body(BodyList, ContentType, Size,
@@ -80,8 +80,8 @@ multipart_body([{Start, End, Body} | BodyList], ContentType, Boundary, Size) ->
     ["--", Boundary, "\r\n",
      "Content-Type: ", ContentType, "\r\n",
      "Content-Range: ",
-         "bytes ", mochiweb_util:make_io(Start), "-", mochiweb_util:make_io(End),
-             "/", mochiweb_util:make_io(Size), "\r\n\r\n",
+         "bytes ", mochinum_utils_floki:make_io(Start), "-", mochinum_utils_floki:make_io(End),
+             "/", mochinum_utils_floki:make_io(Size), "\r\n\r\n",
      Body, "\r\n"
      | multipart_body(BodyList, ContentType, Boundary, Size)].
 
@@ -178,7 +178,7 @@ split_header(Line) ->
     {Name, [$: | Value]} = lists:splitwith(fun (C) -> C =/= $: end,
                                            binary_to_list(Line)),
     {string:to_lower(string:strip(Name)),
-     mochiweb_util:parse_header(Value)}.
+     mochinum_utils_floki:parse_header(Value)}.
 
 read_chunk(Req, Length) when Length > 0 ->
     case Length of
@@ -252,7 +252,7 @@ feed_mp(body, State=#mp{boundary=Prefix, buffer=Buffer, callback=Callback}) ->
     end.
 
 get_boundary(ContentType) ->
-    {"multipart/form-data", Opts} = mochiweb_util:parse_header(ContentType),
+    {"multipart/form-data", Opts} = mochinum_utils_floki:parse_header(ContentType),
     case proplists:get_value("boundary", Opts) of
         S when is_list(S) ->
             S
@@ -451,7 +451,7 @@ parse_form_https_test() ->
 do_parse_form(Transport) ->
     ContentType = "multipart/form-data; boundary=AaB03x",
     "AaB03x" = get_boundary(ContentType),
-    Content = mochiweb_util:join(
+    Content = mochinum_utils_floki:join(
                 ["--AaB03x",
                  "Content-Disposition: form-data; name=\"submit-name\"",
                  "",
@@ -491,7 +491,7 @@ parse_https_test() ->
 do_parse(Transport) ->
     ContentType = "multipart/form-data; boundary=AaB03x",
     "AaB03x" = get_boundary(ContentType),
-    Content = mochiweb_util:join(
+    Content = mochinum_utils_floki:join(
                 ["--AaB03x",
                  "Content-Disposition: form-data; name=\"submit-name\"",
                  "",
@@ -542,7 +542,7 @@ parse_partial_body_boundary(Transport) ->
     Boundary = string:copies("$", 2048),
     ContentType = "multipart/form-data; boundary=" ++ Boundary,
     ?assertEqual(Boundary, get_boundary(ContentType)),
-    Content = mochiweb_util:join(
+    Content = mochinum_utils_floki:join(
                 ["--" ++ Boundary,
                  "Content-Disposition: form-data; name=\"submit-name\"",
                  "",
@@ -593,7 +593,7 @@ parse_large_header_https_test() ->
 parse_large_header(Transport) ->
     ContentType = "multipart/form-data; boundary=AaB03x",
     "AaB03x" = get_boundary(ContentType),
-    Content = mochiweb_util:join(
+    Content = mochinum_utils_floki:join(
                 ["--AaB03x",
                  "Content-Disposition: form-data; name=\"submit-name\"",
                  "",

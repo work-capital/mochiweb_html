@@ -3,7 +3,7 @@
 
 %% @doc Utilities for parsing and quoting.
 
--module(mochiweb_util).
+-module(mochinum_utils_floki).
 -author('bob@mochimedia.com').
 -export([join/2, quote_plus/1, urlencode/1, parse_qs/1, unquote/1]).
 -export([path_split/1]).
@@ -110,7 +110,7 @@ shell_quote(L) ->
     shell_quote(L, [$\"]).
 
 %% @spec cmd_port([string()], Options) -> port()
-%% @doc open_port({spawn, mochiweb_util:cmd_string(Argv)}, Options).
+%% @doc open_port({spawn, mochinum_utils_floki:cmd_string(Argv)}, Options).
 cmd_port(Argv, Options) ->
     open_port({spawn, cmd_string(Argv)}, Options).
 

@@ -254,7 +254,7 @@ extract_quoted_string([C | Rest], Acc) ->
     extract_quoted_string(Rest, [C | Acc]).
 
 expand({array, L}) ->
-    mochiweb_util:join(lists:reverse(L), ", ");
+    mochinum_utils_floki:join(lists:reverse(L), ", ");
 expand(V) ->
     V.
 

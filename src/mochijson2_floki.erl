@@ -19,7 +19,7 @@
 %% FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 %% DEALINGS IN THE SOFTWARE.
 
-%% @doc Yet another JSON (RFC 4627) library for Erlang. mochijson2 works
+%% @doc Yet another JSON (RFC 4627) library for Erlang. mochijson2_floki works
 %%      with binaries as strings, arrays as lists (without an {array, _})
 %%      wrapper and it only knows how to decode UTF-8 (and ASCII).
 %%
@@ -55,7 +55,7 @@
 %%          </li>
 %%      </ul>
 
--module(mochijson2).
+-module(mochijson2_floki).
 -author('bob@mochimedia.com').
 -export([encoder/1, encode/1]).
 -export([decoder/1, decode/1, decode/2]).
@@ -280,7 +280,7 @@ json_encode_string_unicode([C | Cs], State, Acc) ->
                %% Escaping solidus is only useful when trying to protect
                %% against "</script>" injection attacks which are only
                %% possible when JSON is inserted into a HTML document
-               %% in-line. mochijson2 does not protect you from this, so
+               %% in-line. mochijson2_floki does not protect you from this, so
                %% if you do insert directly into HTML then you need to
                %% uncomment the following case or escape the output of encode.
                %%
@@ -710,7 +710,7 @@ encoder_utf8_test() ->
         iolist_to_binary(encode(<<1,"\321\202\320\265\321\201\321\202">>)),
 
     %% raw utf8 output (optional)
-    Enc = mochijson2:encoder([{utf8, true}]),
+    Enc = mochijson2_floki:encoder([{utf8, true}]),
     <<34,"\\u0001",209,130,208,181,209,129,209,130,34>> =
         iolist_to_binary(Enc(<<1,"\321\202\320\265\321\201\321\202">>)).
 

@@ -11,7 +11,7 @@ Version 2.14.0 released 2016-04-11
 
 Version 2.13.2 released 2016-03-18
 
-* Allow mochijson2 to handle code points that xmerl_ucs considered
+* Allow mochijson2_floki to handle code points that xmerl_ucs considered
   invalid
   https://github.com/mochi/mochiweb/issues/168
 
@@ -218,6 +218,6 @@ Version 2.2.0 released 2011-08-29
 
 Version 2.1.0 released 2011-08-29
 
-* Added new `mochijson2:decode/2` with `{format, struct | proplist | eep18}`
+* Added new `mochijson2_floki:decode/2` with `{format, struct | proplist | eep18}`
   options for easy decoding to various proplist formats. Also added encoding
   support for eep18 style objects.

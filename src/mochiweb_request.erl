@@ -134,8 +134,8 @@ get(peer, {?MODULE, [Socket, _Opts, _Method, _RawPath, _Version, _Headers]}=THIS
 get(path, {?MODULE, [_Socket, _Opts, _Method, RawPath, _Version, _Headers]}) ->
     case erlang:get(?SAVE_PATH) of
         undefined ->
-            {Path0, _, _} = mochiweb_util:urlsplit_path(RawPath),
-            Path = mochiweb_util:normalize_path(mochiweb_util:unquote(Path0)),
+            {Path0, _, _} = mochinum_utils_floki:urlsplit_path(RawPath),
+            Path = mochinum_utils_floki:normalize_path(mochinum_utils_floki:unquote(Path0)),
             put(?SAVE_PATH, Path),
             Path;
         Cached ->
@@ -326,7 +326,7 @@ format_response_header({Code, ResponseHeaders}, {?MODULE, [_Socket, _Opts, _Meth
                      false ->
                          HResponse1
                  end,
-    End = [[mochiweb_util:make_io(K), <<": ">>, V, <<"\r\n">>]
+    End = [[mochinum_utils_floki:make_io(K), <<": ">>, V, <<"\r\n">>]
            || {K, V} <- mochiweb_headers:to_list(HResponse2)],
     Response = mochiweb:new_response({THIS, Code, HResponse2}),
     {[make_version(Version), make_code(Code), <<"\r\n">> | [End, <<"\r\n">>]], Response};
@@ -473,8 +473,8 @@ cleanup({?MODULE, [_Socket, _Opts, _Method, _RawPath, _Version, _Headers]}) ->
 parse_qs({?MODULE, [_Socket, _Opts, _Method, RawPath, _Version, _Headers]}) ->
     case erlang:get(?SAVE_QS) of
         undefined ->
-            {_, QueryString, _} = mochiweb_util:urlsplit_path(RawPath),
-            Parsed = mochiweb_util:parse_qs(QueryString),
+            {_, QueryString, _} = mochinum_utils_floki:urlsplit_path(RawPath),
+            Parsed = mochinum_utils_floki:parse_qs(QueryString),
             put(?SAVE_QS, Parsed),
             Parsed;
         Cached ->
@@ -515,7 +515,7 @@ parse_post({?MODULE, [_Socket, _Opts, _Method, _RawPath, _Version, _Headers]}=TH
                          Binary ->
                              case get_primary_header_value("content-type",THIS) of
                                  "application/x-www-form-urlencoded" ++ _ ->
-                                     mochiweb_util:parse_qs(Binary);
+                                     mochinum_utils_floki:parse_qs(Binary);
                                  _ ->
                                      []
                              end
@@ -618,7 +618,7 @@ serve_file(Path, DocRoot, {?MODULE, [_Socket, _Opts, _Method, _RawPath, _Version
 %% @spec serve_file(Path, DocRoot, ExtraHeaders, request()) -> Response
 %% @doc Serve a file relative to DocRoot.
 serve_file(Path, DocRoot, ExtraHeaders, {?MODULE, [_Socket, _Opts, _Method, _RawPath, _Version, _Headers]}=THIS) ->
-    case mochiweb_util:safe_relative_path(Path) of
+    case mochinum_utils_floki:safe_relative_path(Path) of
         undefined ->
             not_found(ExtraHeaders, THIS);
         RelPath ->
@@ -672,7 +672,7 @@ maybe_serve_file(File, ExtraHeaders, {?MODULE, [_Socket, _Opts, _Method, _RawPat
                 _ ->
                     case file:open(File, [raw, binary]) of
                         {ok, IoDevice} ->
-                            ContentType = mochiweb_util:guess_mime(File),
+                            ContentType = mochinum_utils_floki:guess_mime(File),
                             Res = ok({ContentType,
                                       [{"last-modified", LastModified}
                                        | ExtraHeaders],
@@ -768,11 +768,11 @@ accepted_encodings(SupportedEncodings, {?MODULE, [_Socket, _Opts, _Method, _RawP
         Value ->
             Value
     end,
-    case mochiweb_util:parse_qvalues(AcceptEncodingHeader) of
+    case mochinum_utils_floki:parse_qvalues(AcceptEncodingHeader) of
         invalid_qvalue_string ->
             bad_accept_encoding_value;
         QList ->
-            mochiweb_util:pick_accepted_encodings(
+            mochinum_utils_floki:pick_accepted_encodings(
                 QList, SupportedEncodings, "identity"
             )
     end.
@@ -802,7 +802,7 @@ accepted_encodings(SupportedEncodings, {?MODULE, [_Socket, _Opts, _Method, _RawP
 accepts_content_type(ContentType1, {?MODULE, [_Socket, _Opts, _Method, _RawPath, _Version, _Headers]}=THIS) ->
     ContentType = re:replace(ContentType1, "\\s", "", [global, {return, list}]),
     AcceptHeader = accept_header(THIS),
-    case mochiweb_util:parse_qvalues(AcceptHeader) of
+    case mochinum_utils_floki:parse_qvalues(AcceptHeader) of
         invalid_qvalue_string ->
             bad_accept_header;
         QList ->
@@ -853,7 +853,7 @@ accepted_content_types(Types1, {?MODULE, [_Socket, _Opts, _Method, _RawPath, _Ve
         fun(T) -> re:replace(T, "\\s", "", [global, {return, list}]) end,
         Types1),
     AcceptHeader = accept_header(THIS),
-    case mochiweb_util:parse_qvalues(AcceptHeader) of
+    case mochinum_utils_floki:parse_qvalues(AcceptHeader) of
         invalid_qvalue_string ->
             bad_accept_header;
         QList ->

@@ -87,24 +87,24 @@ decode(S) ->
 %% @spec binary_decoder([binary_decoder_option()]) -> function()
 %% @doc Create a binary_decoder/1 with the given options.
 binary_decoder(Options) ->
-    mochijson2:decoder(Options).
+    mochijson2_floki:decoder(Options).
 
 %% @spec binary_encoder([binary_encoder_option()]) -> function()
 %% @doc Create a binary_encoder/1 with the given options.
 binary_encoder(Options) ->
-    mochijson2:encoder(Options).
+    mochijson2_floki:encoder(Options).
 
 %% @spec binary_encode(bjson_term()) -> iolist()
 %% @doc Encode the given as JSON to an iolist, using lists for arrays and
 %%      binaries for strings.
 binary_encode(Any) ->
-    mochijson2:encode(Any).
+    mochijson2_floki:encode(Any).
 
 %% @spec binary_decode(iolist()) -> bjson_term()
 %% @doc Decode the given iolist to Erlang terms, using lists for arrays and
 %%      binaries for strings.
 binary_decode(S) ->
-    mochijson2:decode(S).
+    mochijson2_floki:decode(S).
 
 %% Internal API
 
