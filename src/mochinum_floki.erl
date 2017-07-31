@@ -27,7 +27,7 @@
 %% in Proceedings of the SIGPLAN '96 Conference on Programming Language
 %% Design and Implementation.
 
--module(mochinum).
+-module(mochinum_floki).
 -author("Bob Ippolito <bob@mochimedia.com>").
 -export([digits/1, frexp/1, int_pow/2, int_ceil/1]).
 
@@ -331,7 +331,7 @@ digits_test() ->
                  digits(LargeNorm)),
     ?assertEqual(LargeNorm,
                  list_to_float(digits(LargeNorm))),
-    %% issue #10 - mochinum:frexp(math:pow(2, -1074)).
+    %% issue #10 - mochinum_floki:frexp(math:pow(2, -1074)).
     ?assertEqual("5.0e-324",
                  digits(math:pow(2, -1074))),
     ok.
@@ -363,7 +363,7 @@ frexp_test() ->
     ?assertEqual(
         {0.99999999999999989, 1024},
         frexp(LargeNorm)),
-    %% issue #10 - mochinum:frexp(math:pow(2, -1074)).
+    %% issue #10 - mochinum_floki:frexp(math:pow(2, -1074)).
     ?assertEqual(
        {0.5, -1073},
        frexp(math:pow(2, -1074))),

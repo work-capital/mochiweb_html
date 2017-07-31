@@ -313,7 +313,7 @@ convert2(Arg, #conversion{ctype=char}) ->
 convert2(Arg, #conversion{ctype=decimal}) ->
     integer_to_list(Arg);
 convert2(Arg, #conversion{ctype=general, precision=undefined}) ->
-    try mochinum:digits(Arg)
+    try mochinum_floki:digits(Arg)
     catch error:undef -> io_lib:format("~g", [Arg]) end;
 convert2(Arg, #conversion{ctype=fixed, precision=undefined}) ->
     io_lib:format("~f", [Arg]);
@@ -331,7 +331,7 @@ str(A) when is_atom(A) ->
 str(I) when is_integer(I) ->
     integer_to_list(I);
 str(F) when is_float(F) ->
-    try mochinum:digits(F)
+    try mochinum_floki:digits(F)
     catch error:undef -> io_lib:format("~g", [F]) end;
 str(L) when is_list(L) ->
     L;
@@ -341,7 +341,7 @@ str(P) ->
     repr(P).
 
 repr(P) when is_float(P) ->
-    try mochinum:digits(P)
+    try mochinum_floki:digits(P)
     catch error:undef -> float_to_list(P) end;
 repr(P) ->
     io_lib:format("~p", [P]).

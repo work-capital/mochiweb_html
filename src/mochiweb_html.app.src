@@ -10,7 +10,7 @@
    {files, [
      "src/mochiweb_html.app.src",
      "src/mochiutf8.erl",
-     "src/mochinum.erl",
+     "src/mochinum_floki.erl",
      "src/mochiweb_charref.erl",
      "src/mochiweb_html.erl",
      "rebar.config",

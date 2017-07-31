@@ -131,7 +131,7 @@ json_encode(null, _State) ->
 json_encode(I, _State) when is_integer(I) ->
     integer_to_list(I);
 json_encode(F, _State) when is_float(F) ->
-    mochinum:digits(F);
+    mochinum_floki:digits(F);
 json_encode(L, State) when is_list(L); is_binary(L); is_atom(L) ->
     json_encode_string(L, State);
 json_encode({array, Props}, State) when is_list(Props) ->

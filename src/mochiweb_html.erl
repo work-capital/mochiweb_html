@@ -161,7 +161,7 @@ escape_attr(S) when is_list(S) ->
 escape_attr(I) when is_integer(I) ->
     escape_attr(integer_to_list(I), []);
 escape_attr(F) when is_float(F) ->
-    escape_attr(mochinum:digits(F), []).
+    escape_attr(mochinum_floki:digits(F), []).
 
 to_html([], Acc) ->
     lists:reverse(Acc);
